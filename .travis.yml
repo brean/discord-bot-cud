@@ -2,8 +2,6 @@ language: python
 python:
   - 3.8
 
-matrix:
-
 install:
     - pip install --quiet -r requirements.txt
 
