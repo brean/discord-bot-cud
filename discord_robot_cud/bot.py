@@ -26,8 +26,8 @@ class MyClient(discord.Client):
                 # we already had this paring!
                 # this might end in an endless loop but -.-
             else:
-                del members[m1]
-                del members[m2]
+                del members[members.index(m1)]
+                del members[members.index(m2)]
                 self.member_pairings[m1.id].append(m2.id)
                 self.member_pairings[m2.id].append(m1.id)
                 nr += 1
