@@ -1,3 +1,4 @@
+from random import shuffle
 import os
 
 import discord
@@ -6,34 +7,61 @@ import discord
 class MyClient(discord.Client):
     async def create_channel(self, guild, nr, member):
         channel = await guild.create_voice_channel(
-            f'kennenlernrunde_gruppe_#{nr}')
-        print('--------------', nr)
+            f'#{nr}_kennlerngruppe')
         await member[0].move_to(channel)
         await member[1].move_to(channel)
+        self.channels.append(channel)
+        print(f'group {nr}: {member[0].name} - {member[1].name}')
 
+    async def shuffle_pairs(self):
+        nr = 0
+        guild = self.current_guild
+        # get copy of members
+        members = []+self.members
+        while len(members) >= 2:
+            shuffle(members)
+            m1, m2 = members[:2]
+            if m2.id in self.member_pairings[m1.id]:
+                continue
+                # we already had this paring!
+                # this might end in an endless loop but -.-
+            else:
+                del members[m1]
+                del members[m2]
+                self.member_pairings[m1.id].append(m2.id)
+                self.member_pairings[m2.id].append(m1.id)
+                nr += 1
+                await self.create_channel(guild, nr, [m1, m2])
 
-    async def on_ready(self):
+    def get_member_from_channel(self):
         for guild in self.guilds:
             for channel in guild.text_channels:
                 if channel.name == 'Allgemein':
-                    members = channel.members
-                    break
-            # we have the members - ignore all other guilds!
-            if members:
-                break
+                    self.current_guild = guild
+                    mem = channel.members
+                    return [m for m in mem if not m.bot and m.voice]
 
-        members = [m for m in channel.members if not m.bot and m.voice]
-        # TODO: resort members/get random pairing for users in members
+    async def on_ready(self):
+        self.channels = []
+        self.members = self.get_member_from_channel()
 
-        for i in range(int(len(members)/2)):
-            await self.create_channel(guild, i+1, members[i*2:i*2+2])
-            # break
+        self.member_pairings = {}
+        for m in member:
+            self.member_pairings[m.id] = []
 
         print(f'{self.user} has connected to Discord!')
 
-    #async def on_message(self, msg):
-    #    content = msg.content
-    #    print(f'new message: {msg.content}')
+    async def cleanup(self):
+        for channel in self.channels:
+            await channel.remove()
+
+    async def on_message(self, msg):
+        content = msg.content
+        if content == 'bot_shuffle':
+            await self.shuffle_pairs()
+        if content == 'bot_cleanup':
+            await self.cleanup()
+
 
 def main(token):
     client = MyClient()
