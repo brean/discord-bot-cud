@@ -1,5 +1,6 @@
 from discord_robot_cud.bot import round_move
 
+
 def test_move():
     a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     b = [2, 0, 4, 1, 6, 3, 8, 5, 9, 7]

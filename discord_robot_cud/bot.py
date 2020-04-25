@@ -1,7 +1,7 @@
 from random import shuffle
-import os
 
 import discord
+
 
 def round_move(lst: list):
     """simple algorithm to move to next one inside of groups."""
@@ -26,14 +26,13 @@ class MyClient(discord.Client):
         print(f'group {nr}: {member[0].name} - {member[1].name}')
 
     async def shuffle_pairs(self):
-        nr = 0
         guild = self.current_guild
         self.members = round_move(self.members)
-        for idx in range(int(len(members)/2)):
+        for idx in range(int(len(self.members)/2)):
             await self.create_channel(
-                guild, 
-                idx + 1, 
-                members[idx * 2:idx * 2 + 2])
+                guild,
+                idx + 1,
+                self.members[idx * 2:idx * 2 + 2])
 
     def get_member_from_channel(self):
         """get all user from the channel"""
@@ -54,7 +53,6 @@ class MyClient(discord.Client):
     async def on_ready(self):
         """Discord client is ready, set member of channel"""
         self.members = self.get_member_from_channel()
-        
         print(f'{self.user} has connected to Discord!')
 
     async def on_message(self, msg):
