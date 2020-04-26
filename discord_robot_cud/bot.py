@@ -22,7 +22,7 @@ def round_move(lst: list):
 
 class DiscordCommands:
     """Stores all known commands in a dict.
-    
+
     Provides decorators to easily extend existing discord
     clients with new commands.
     """

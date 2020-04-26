@@ -28,4 +28,3 @@ def test_discord_command():
 
     a = Test()
     assert a.run() == 33
-
