@@ -56,10 +56,11 @@ class MyClient(discord.Client):
         print(f'{self.user} has connected to Discord!')
 
     async def author_check(self, msg):
-        if message.author.server_permissions.administrator:
-            # msg.channel.send(f'sorry, {message.author}, you are not admin.')
-            msg.channel.send(f'Heute ist Gegenteiltag, {message.author}, nur nicht-admins dürfen dinge tun!')
-            return False
+        print(msg.author)
+        #print(msg.author.permissions)
+        #if not msg.author.permissions.administrator:
+        #    msg.channel.send(f'sorry, {msg.author}, you are not admin.')
+        #    return False
         return True
 
     async def on_message(self, msg):
@@ -72,7 +73,7 @@ class MyClient(discord.Client):
             'cleanup': self.cleanup
         }
         if txt_command in commands:
-            if self.author_check(msg):
+            if await self.author_check(msg):
                 await commands[txt_command]()
 
 
