@@ -55,13 +55,25 @@ class MyClient(discord.Client):
         self.members = self.get_member_from_channel()
         print(f'{self.user} has connected to Discord!')
 
+    async def author_check(self, msg):
+        if message.author.server_permissions.administrator:
+            # msg.channel.send(f'sorry, {message.author}, you are not admin.')
+            msg.channel.send(f'Heute ist Gegenteiltag, {message.author}, nur nicht-admins dürfen dinge tun!')
+            return False
+        return True
+
     async def on_message(self, msg):
-        content = msg.content
-        # TODO: check msg.user?
-        if content == 'bot_shuffle':
-            await self.shuffle_pairs()
-        if content == 'bot_cleanup':
-            await self.cleanup()
+        txt_command = msg.content
+        if not txt_command.startswith('!'):
+            return
+        txt_command = txt_command[1:]
+        commands = {
+            'shuffle': self.shuffle_pairs,
+            'cleanup': self.cleanup
+        }
+        if txt_command in commands:
+            if self.author_check(msg):
+                await commands[txt_command]()
 
 
 def main(token):
