@@ -15,3 +15,5 @@ def test_move():
     assert round_move(c) == d
     assert round_move(d) == e
     assert round_move(e) == f
+    a = [0, 1]
+    assert round_move(a) == [1, 0]

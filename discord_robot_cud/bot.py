@@ -6,6 +6,9 @@ from discord.permissions import Permissions
 # the letter(s) a valid command has to start with
 START_LETTER = '.'
 
+# the default channel name
+MAIN_CHANNEL_NAME = 'Allgemein'
+
 
 def round_move(lst: list):
     """simple algorithm to move to next one inside of groups."""
@@ -54,6 +57,8 @@ class MyClient(discord.Client):
             f'#{nr}_gruppe')
         await member[0].move_to(channel)
         await member[1].move_to(channel)
+        if not hasattr(self, 'channels'):
+            self.channels = []
         self.channels.append(channel)
         print(f'group {nr}: {member[0].name} - {member[1].name}')
 
@@ -71,7 +76,7 @@ class MyClient(discord.Client):
         """get all user from the channel"""
         for guild in self.guilds:
             for channel in guild.text_channels:
-                if channel.name == 'Allgemein':
+                if channel.name == MAIN_CHANNEL_NAME:
                     self.current_guild = guild
                     mem = channel.members
                     mem = [m for m in mem if not m.bot and m.voice]
@@ -82,7 +87,7 @@ class MyClient(discord.Client):
     async def cleanup(self):
         """Delete all known channels."""
         for channel in self.channels:
-            await channel.remove()
+            await channel.delete()
 
     async def on_ready(self):
         """Discord client is ready, set member of channel"""
