@@ -21,6 +21,11 @@ def round_move(lst: list):
 
 
 class DiscordCommands:
+    """Stores all known commands in a dict.
+    
+    Provides decorators to easily extend existing discord
+    clients with new commands.
+    """
     known_commands = {}
 
     @staticmethod
@@ -42,6 +47,8 @@ class DiscordCommands:
 
 
 class MyClient(discord.Client):
+    """Custom discord client to """
+
     async def create_channel(self, guild, nr, member):
         channel = await guild.create_voice_channel(
             f'#{nr}_gruppe')
@@ -98,7 +105,7 @@ class MyClient(discord.Client):
         commands = DiscordCommands.known_commands
         if txt_command in commands:
             if await self.author_check(msg):
-                await commands[txt_command]()
+                await commands[txt_command](self)
 
 
 def main(token):

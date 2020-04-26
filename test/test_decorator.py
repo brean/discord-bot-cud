@@ -17,3 +17,15 @@ def test_discord_command():
         return False
 
     assert known == {'foo': foo, 'bar': blubb}
+
+    class Test:
+        @DiscordCommands.add
+        def test(self):
+            return 33
+
+        def run(self):
+            return DiscordCommands.known_commands['test'](self)
+
+    a = Test()
+    assert a.run() == 33
+
