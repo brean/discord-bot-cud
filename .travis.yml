@@ -6,5 +6,4 @@ install:
     - pip install --quiet -r requirements.txt
 
 script:
-    - python3 -m pytest
-    - python3 -m flake8
+    - make python-test

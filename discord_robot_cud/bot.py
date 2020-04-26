@@ -51,15 +51,20 @@ class DiscordCommands:
 
 class MyClient(discord.Client):
     """Custom discord client to """
+    def __init__(self):
+        super().__init__()
+        # list of created channels
+        self.channels = []
+        # list of moved users
+        self.moved_user = []
 
     async def create_channel(self, guild, nr, member):
         channel = await guild.create_voice_channel(
             f'#{nr}_gruppe')
         await member[0].move_to(channel)
         await member[1].move_to(channel)
-        if not hasattr(self, 'channels'):
-            self.channels = []
         self.channels.append(channel)
+        self.moved_member += member
         print(f'group {nr}: {member[0].name} - {member[1].name}')
 
     @DiscordCommands.add('shuffle')
@@ -72,22 +77,30 @@ class MyClient(discord.Client):
                 idx + 1,
                 self.members[idx * 2:idx * 2 + 2])
 
-    def get_member_from_channel(self):
+    def get_member_from_channel(self, channel_name=MAIN_CHANNEL_NAME):
         """get all user from the channel"""
         for guild in self.guilds:
-            for channel in guild.text_channels:
-                if channel.name == MAIN_CHANNEL_NAME:
+            for channel in guild.voice_channels:
+                if channel.name == channel_name:
                     self.current_guild = guild
+                    self.main_channel = channel
                     mem = channel.members
                     mem = [m for m in mem if not m.bot and m.voice]
                     shuffle(mem)
                     return mem
+        if not self.main_channel:
+            print(f'Error: could not find channel named {channel_name}')
 
     @DiscordCommands.add
     async def cleanup(self):
         """Delete all known channels."""
+        if self.main_channel:
+            for member in self.moved_member:
+                member.move_to(self.main_channel)
         for channel in self.channels:
             await channel.delete()
+        self.channels = []
+        self.moved_member = []
 
     async def on_ready(self):
         """Discord client is ready, set member of channel"""
