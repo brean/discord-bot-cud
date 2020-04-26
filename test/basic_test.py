@@ -1,4 +1,4 @@
-from discord_robot_cud.bot import round_move
+from discord_bot_cud.bot import round_move
 
 
 def test_move():

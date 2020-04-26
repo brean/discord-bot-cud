@@ -1,4 +1,4 @@
-from discord_robot_cud.bot import DiscordCommands
+from discord_bot_cud.bot import DiscordCommands
 
 
 def test_discord_command():
