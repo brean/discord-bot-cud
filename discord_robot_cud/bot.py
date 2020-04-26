@@ -32,9 +32,13 @@ class DiscordCommands:
         if isinstance(args, str):
             def decorator(func):
                 DiscordCommands.add_func(args, func)
+                return func
             return decorator
         else:
-            DiscordCommands.add_func(args.__qualname__, args)
+            name = args.__qualname__
+            name = name.rsplit('.', 1)[-1]
+            DiscordCommands.add_func(name, args)
+            return args
 
 
 class MyClient(discord.Client):
