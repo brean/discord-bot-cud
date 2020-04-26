@@ -1,6 +1,7 @@
 from random import shuffle
 
 import discord
+from discord.permissions import Permissions
 
 
 def round_move(lst: list):
@@ -56,11 +57,10 @@ class MyClient(discord.Client):
         print(f'{self.user} has connected to Discord!')
 
     async def author_check(self, msg):
-        print(msg.author)
-        #print(msg.author.permissions)
-        #if not msg.author.permissions.administrator:
-        #    msg.channel.send(f'sorry, {msg.author}, you are not admin.')
-        #    return False
+        guild_perm = msg.author.guild_permissions
+        if guild_perm != Permissions.all():
+            await msg.channel.send(f'Sorry, {msg.author}, you are not Admin!')
+            return False
         return True
 
     async def on_message(self, msg):
