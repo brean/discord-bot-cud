@@ -19,9 +19,11 @@ def round_move(lst: list):
 
 class DiscordCommands:
     known_commands = {}
+
     @staticmethod
     def add_func(name, func):
         DiscordCommands.known_commands[name] = func
+
     @staticmethod
     def add(args=None):
         if isinstance(args, str):
