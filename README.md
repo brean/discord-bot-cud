@@ -1,6 +1,6 @@
 # discord bot for code+design
 
-Discord bot that creates groups of 2 for Code+Design Camps
+Discord bot that creates groups of 2 for Online [Code+Design](http://code.design) Camps
 
 [![Build Status](https://travis-ci.org/brean/discord-bot-cud.svg?branch=master)](https://travis-ci.org/brean/discord-bot-cud)
 
