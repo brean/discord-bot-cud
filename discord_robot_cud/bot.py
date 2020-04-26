@@ -3,6 +3,9 @@ from random import shuffle
 import discord
 from discord.permissions import Permissions
 
+# the letter(s) a valid command has to start with
+START_LETTER = '.'
+
 
 def round_move(lst: list):
     """simple algorithm to move to next one inside of groups."""
@@ -84,9 +87,10 @@ class MyClient(discord.Client):
 
     async def on_message(self, msg):
         txt_command = msg.content
-        if not txt_command.startswith('!'):
+        start = START_LETTER
+        if not txt_command.startswith(start):
             return
-        txt_command = txt_command[1:]
+        txt_command = txt_command[len(start):]
         commands = DiscordCommands.known_commands
         if txt_command in commands:
             if await self.author_check(msg):
