@@ -17,6 +17,21 @@ def round_move(lst: list):
     return new
 
 
+class DiscordCommands:
+    known_commands = {}
+    @staticmethod
+    def add_func(name, func):
+        DiscordCommands.known_commands[name] = func
+    @staticmethod
+    def add(args=None):
+        if isinstance(args, str):
+            def decorator(func):
+                DiscordCommands.add_func(args, func)
+            return decorator
+        else:
+            DiscordCommands.add_func(args.__qualname__, args)
+
+
 class MyClient(discord.Client):
     async def create_channel(self, guild, nr, member):
         channel = await guild.create_voice_channel(
@@ -26,6 +41,7 @@ class MyClient(discord.Client):
         self.channels.append(channel)
         print(f'group {nr}: {member[0].name} - {member[1].name}')
 
+    @DiscordCommands.add('shuffle')
     async def shuffle_pairs(self):
         guild = self.current_guild
         self.members = round_move(self.members)
@@ -46,6 +62,7 @@ class MyClient(discord.Client):
                     shuffle(mem)
                     return mem
 
+    @DiscordCommands.add
     async def cleanup(self):
         """Delete all known channels."""
         for channel in self.channels:
@@ -68,10 +85,7 @@ class MyClient(discord.Client):
         if not txt_command.startswith('!'):
             return
         txt_command = txt_command[1:]
-        commands = {
-            'shuffle': self.shuffle_pairs,
-            'cleanup': self.cleanup
-        }
+        commands = DiscordCommands.known_commands
         if txt_command in commands:
             if await self.author_check(msg):
                 await commands[txt_command]()
