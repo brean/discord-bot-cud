@@ -79,6 +79,7 @@ class MyClient(discord.Client):
 
     def get_member_from_channel(self, channel_name=MAIN_CHANNEL_NAME):
         """get all user from the channel"""
+        self.main_channel = None
         for guild in self.guilds:
             for channel in guild.voice_channels:
                 if channel.name == channel_name:
@@ -101,6 +102,15 @@ class MyClient(discord.Client):
             await channel.delete()
         self.channels = []
         self.moved_member = []
+
+    async def create_role_and_assign_user(self, role_name="testrolle"):
+        guild = self.main_channel.guild
+        roles = [r for r in guild.roles if r.name == role_name]
+        if len(roles) == 0:
+            roles = [await guild.create_role(name=role_name)]
+        for mem in self.members:
+            for role in roles:
+                await mem.add_roles(role)
 
     async def on_ready(self):
         """Discord client is ready, set member of channel"""
