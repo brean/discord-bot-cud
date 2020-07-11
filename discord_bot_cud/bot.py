@@ -50,9 +50,8 @@ class DiscordCommands:
         for cmd in DiscordCommands.known_commands.keys():
             txt += f'\n - {START_LETTER}{cmd}'
             if cmd in DiscordCommands.command_parameters:
-                txt += ' ('
-                txt += ', '.join(DiscordCommands.command_parameters[cmd])
-                txt += ')'
+                cmds = ', '.join(DiscordCommands.command_parameters[cmd])
+                txt += f' ({cmds})'
         return txt
 
     @staticmethod
@@ -69,8 +68,7 @@ class DiscordCommands:
                 return func
             return decorator
         else:
-            name = args.__qualname__
-            name = name.rsplit('.', 1)[-1]
+            name = args.__qualname__.rsplit('.', 1)[-1]
             DiscordCommands.add_func(name, args, params)
             return args
 
