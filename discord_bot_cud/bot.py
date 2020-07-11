@@ -222,11 +222,11 @@ class MyClient(discord.Client):
     @DiscordCommands.add
     async def stop_shuffle(self, msg):
         if self.shuffle_timer:
-            await msg.channel.send(f'Shuffle stopped!')
+            await msg.channel.send('Shuffle stopped!')
             self.shuffle_timer.cancel()
             self.shuffle_timer = None
         else:
-            await msg.channel.send(f'I can not stop - Shuffle is not running!')
+            await msg.channel.send('I can not stop - Shuffle is not running!')
 
     @DiscordCommands.add
     async def cleanup(self):
