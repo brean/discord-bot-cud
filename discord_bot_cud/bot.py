@@ -33,6 +33,7 @@ def round_move(lst: list):
 def format_time(sec):
     return f'{int(sec/60)}:{sec%60:02d}'
 
+
 class DiscordCommands:
     """Singleton that stores all known commands in a dict.
 
