@@ -1,5 +1,5 @@
 install:
-	pipenv install
+	pipenv install -d
 
 run:
 	pipenv run python3 main.py
