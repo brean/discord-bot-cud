@@ -84,7 +84,7 @@ class MyClient(discord.Client):
     @DiscordCommands.add
     async def list_commands(self, msg):
         await msg.channel.send(
-            'The known commands for this bot are:'+
+            'The known commands for this bot are:' +
             DiscordCommands.command_list())
 
     @DiscordCommands.add
@@ -101,7 +101,7 @@ class MyClient(discord.Client):
             self.main_channel = channel
             self.members = self.get_member_from_channel(self.main_channel)
             shuffle(self.members)
-        
+
         # cleanup - move users and remove old channels if they exist
         self.cleanup()
 
@@ -137,7 +137,6 @@ class MyClient(discord.Client):
         if not member:
             txt += '(the channel is empty)'
         await msg.channel.send(txt)
-
 
     @DiscordCommands.add
     async def cleanup(self):
