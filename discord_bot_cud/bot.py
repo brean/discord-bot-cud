@@ -1,5 +1,5 @@
 import asyncio
-from random import shuffle
+from random import shuffle, choice
 import pathlib
 import yaml
 
@@ -26,7 +26,8 @@ CHANNEL_SUFFIX = '_gruppe'
 
 translations = {}
 
-with open(pathlib.Path().absolute() / 'data' / 'translations.yml') as yaml_file:
+yaml_path = pathlib.Path().absolute() / 'data' / 'translations.yml'
+with open(yaml_path) as yaml_file:
     translations = yaml.full_load(yaml_file)
 
 
@@ -37,7 +38,7 @@ def translate(txt, lang=None):
     if txt in translations[default_lang]:
         tra = translations[default_lang][txt]
         if isinstance(tra, list):
-            return rnd.choice(tra)
+            return choice(tra)
         else:
             return tra
     else:
@@ -108,12 +109,15 @@ def member_name(member):
     else:
         return member.name
 
+
 async def try_to_move_channel(member, channel):
     try:
         await member.move_to(channel)
     except discord.errors.HTTPException:
-        print(translate('cannot_move_user').format(member_name(member), channel.name))
+        print(translate('cannot_move_user').format(
+            member_name(member), channel.name))
         await member.send(translate('can_not_move_you').format(channel.name))
+
 
 def get_channel_by_name(guilds, channel_name):
     for guild in guilds:
@@ -328,7 +332,8 @@ class MyClient(discord.Client):
         guild_perm = msg.author.guild_permissions
         if guild_perm != Permissions.all():
             name = member_name(msg.author)
-            await msg.channel.send(translate('not_admin').format(msg.author))
+            await msg.channel.send(
+                translate('not_admin').format(name))
             return False
         return True
 
@@ -343,7 +348,7 @@ class MyClient(discord.Client):
         commands = DiscordCommands.known_commands
         if txt_command in commands:
             if await self.author_check(msg):
-                func = commands[txt_command] 
+                func = commands[txt_command]
                 await func(self, msg, *txt_params)
 
 
