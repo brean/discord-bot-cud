@@ -14,7 +14,7 @@ START_LETTER = '.'
 MAIN_CHANNEL = 'Allgemein'
 
 # time in seconds when we shuffle again, set to <=0 for manual shuffeling
-SHUFFLE_TIME = 5 * 60
+SHUFFLE_TIME = 2 * 60
 
 # time in seconds we show how much time is remaining in the main channel
 INFO_TIME = 60
