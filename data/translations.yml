@@ -1,0 +1,40 @@
+de:
+  not_admin: "Sorry, {}, du bist kein Admin!"
+  cannot_move_user: Kann Nutzer {} nicht in Channel {} verschieben!
+  can_not_move_you: "Hey, ich konnte dich nicht in den Channel #{} verschieben. Bitte wechsel selbst in den Channel."
+  voice_channel_not_found: "Kann Voice-Channel mit Namen {} nicht finden!"
+  mem_in_chan: Ich sehe {} Nutzer im Channel {}.
+  known_commands: 'Die Befehle, die dieser Bot akzeptiert sind:'
+  shuffle_channel: 'Der Channel den wir nutzen werden ist: {}'
+  no_channel_name: 'Es wurde kein Channel-Name angegeben.'
+  members: 'Mitglieder im Channel {} sind:'
+  empty: '(Der Channel ist leer)'
+  shuffle_user: 'Vermische Nutzer:'
+  shuffle_time: 'Nach {} werden die Nutzer weiter geschoben.'
+  ready: "{} hat sich mit Discord verbunden!"
+  no_shuffle: 'Ich kann nicht stoppen, das herumschieben von Nutzern läuft nicht!'
+  shuffle_stopped: Ab jetzt werden Nutzer nicht mehr rum geschoben
+  not_even: 'Es geht nicht gerade auf! Also wähle ich zufällig jemanden aus...\nHerzlichen Glückwunsch, @{}! Du kannst frei entscheiden, welcher Gruppe du beitreten möchtest!'
+  switch_from: Wechsel von Deutsch...
+  switch_to: ...zu Deutsch
+  not_time: 'Keine gültige Zeitangabe: "{}"'
+
+en:
+  cannot_move_user: Can not move user {} to channel {}!
+  can_not_move_you: "Hey, I could not move you in channel #{}. Please change into the channel on your own."
+  voice_channel_not_found: "Could not find voice channel named {}!"
+  mem_in_chan: I see {} user in channel {}.
+  known_commands: 'The known commands for this bot are:'
+  shuffle_channel: 'The channel we use for shuffeling is: {}'
+  no_channel_name: 'Sorry, no channel name given.'
+  members: 'Members of channel {} are:'
+  empty: '(The channel is empty)'
+  shuffle_user: 'Shuffle user:'
+  shuffle_time: 'After {} the user will move again.'
+  ready: "{} has connected to Discord!"
+  no_shuffle: 'I can not stop - Shuffle is not running!'
+  shuffle_stopped: 'Shuffle stopped!'
+  not_even: 'We are not even! So I have to randomly pick someone...\nCongratulation, @{}! You can freely decide which group to join!'
+  switch_from: Switch from English...
+  switch_to: ...to English
+  not_time: 'Not a valid time: "{}"'
