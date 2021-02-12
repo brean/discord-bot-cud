@@ -2,7 +2,7 @@
 
 Discord bot that creates groups of 2 for Online [Code+Design](http://code.design) Camps
 
-[![Build Status](https://travis-ci.org/brean/discord-bot-cud.svg?branch=master)](https://travis-ci.org/brean/discord-bot-cud)
+[![Build Status](https://api.travis-ci.com/brean/discord-bot-cud.svg)](https://travis-ci.com/brean/discord-bot-cud)
 
 ## Installation and usage
 
